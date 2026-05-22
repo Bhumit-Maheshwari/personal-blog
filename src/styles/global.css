@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+
+  font-family: var(--font-body);
+
+  transition: 0.3s;
+}
+
+a {
+  text-decoration: none;
+}
+
+.page {
+  padding: 40px;
+}
