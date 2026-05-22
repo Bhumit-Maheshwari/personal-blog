@@ -1,16 +1,45 @@
-# React + Vite
+# Personal Blog Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
 
-Currently, two official plugins are available:
+This is a React.js internship project built using Vite and React Router.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The project contains:
+- Home Page
+- Article Page
+- Author Page
+- Admin Dashboard
+- Reusable Design System
+- Dark Mode Toggle
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Technologies Used
 
-## Expanding the ESLint configuration
+- React.js
+- Vite
+- React Router DOM
+- Axios
+- React Markdown
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Features
+
+- Dynamic Routing
+- Reusable UI Components
+- CSS Design Tokens
+- Dark Mode with localStorage Persistence
+
+---
+
+## Light Mode
+
+<img width="837" height="391" alt="image" src="https://github.com/user-attachments/assets/e4607280-be07-412d-96d8-81db255adb8e" />
+
+
+---
+
+## Dark Mode
+
+<img width="823" height="407" alt="image" src="https://github.com/user-attachments/assets/c38ec8f5-55c2-4527-8db7-2faf1d113c1f" />
