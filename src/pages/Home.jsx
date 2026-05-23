@@ -1,11 +1,44 @@
-import Button from '../components/ui/Button'
-import Card from '../components/ui/Card'
-import Input from '../components/ui/Input'
+import { useState } from 'react'
+
+import articlesData from '../data/articles'
+
 import Container from '../components/ui/Container'
 import Heading from '../components/ui/Heading'
+import Input from '../components/ui/Input'
 import ThemeToggle from '../components/ui/ThemeToggle'
 
+import ArticleList from '../components/ArticleList'
+
 function Home() {
+
+  const [search, setSearch] = useState('')
+
+  const [selectedTag, setSelectedTag] =
+    useState('All')
+
+  const tags = [
+    'All',
+    'React',
+    'JavaScript',
+    'CSS',
+    'Node'
+  ]
+
+  const filteredArticles =
+    articlesData.filter((article) => {
+
+      const matchesSearch =
+        article.title
+          .toLowerCase()
+          .includes(search.toLowerCase())
+
+      const matchesTag =
+        selectedTag === 'All'
+          ? true
+          : article.tag === selectedTag
+
+      return matchesSearch && matchesTag
+    })
 
   return (
 
@@ -16,30 +49,50 @@ function Home() {
         <ThemeToggle />
 
         <Heading>
-          Design System Playground
+          Blog Articles
         </Heading>
 
+        <br />
+
         <Input
-          placeholder="Search article..."
+          placeholder="Search articles..."
+          value={search}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
         />
 
-        <Card>
+        <br />
+        <br />
 
-          <h2>
-            React Blog Article
-          </h2>
+        {
+          tags.map((tag) => (
 
-          <p>
-            This card demonstrates reusable UI components.
-          </p>
+            <button
+              key={tag}
+              onClick={() =>
+                setSelectedTag(tag)
+              }
+              style={{
+                marginRight: '10px',
+                padding: '10px',
+                cursor: 'pointer'
+              }}
+            >
 
-          <br />
+              {tag}
 
-          <Button>
-            Read More
-          </Button>
+            </button>
 
-        </Card>
+          ))
+        }
+
+        <br />
+        <br />
+
+        <ArticleList
+          articles={filteredArticles}
+        />
 
       </div>
 
