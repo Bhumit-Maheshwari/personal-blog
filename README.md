@@ -43,3 +43,10 @@ The project contains:
 ## Dark Mode
 
 <img width="823" height="407" alt="image" src="https://github.com/user-attachments/assets/c38ec8f5-55c2-4527-8db7-2faf1d113c1f" />
+
+## UPDATE FEATURES SECTION
+
+- Article List Rendering
+- Search Functionality
+- Tag Filtering
+- Mock JSON Data
