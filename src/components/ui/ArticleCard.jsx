@@ -1,5 +1,6 @@
 import Card from './Card'
 import Button from './Button'
+import { Link } from 'react-router-dom'
 
 function ArticleCard({ article }) {
 
@@ -25,10 +26,13 @@ function ArticleCard({ article }) {
 
       <br />
       <br />
+      <Link to={`/article/${article.slug}`}>
 
-      <Button>
-        Read More
-      </Button>
+        <Button>
+          Read More
+        </Button>
+
+      </Link>
 
     </Card>
 
