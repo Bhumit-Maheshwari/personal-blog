@@ -9,14 +9,24 @@
   --color-border: #E2E8F0;
 
   /* TYPOGRAPHY */
-  --font-heading: 'Poppins', sans-serif;
-  --font-body: 'Inter', sans-serif;
 
-  /* FONT SIZE */
-  --text-sm: 14px;
-  --text-md: 16px;
-  --text-lg: 22px;
-  --text-xl: 32px;
+--font-heading: 'Poppins', sans-serif;
+--font-body: 'Inter', sans-serif;
+
+/* FONT SIZES */
+
+--text-xs: 12px;
+--text-sm: 14px;
+--text-md: 16px;
+--text-lg: 22px;
+--text-xl: 32px;
+--text-2xl: 42px;
+
+/* LINE HEIGHT */
+
+--line-height-sm: 1.4;
+--line-height-md: 1.6;
+--line-height-lg: 1.8;
 
   /* SPACING */
   --space-sm: 8px;

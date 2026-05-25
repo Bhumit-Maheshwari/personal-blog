@@ -50,3 +50,8 @@ The project contains:
 - Search Functionality
 - Tag Filtering
 - Mock JSON Data
+
+- Responsive Design
+- Typography System
+- Backend Architecture Planning
+- Mobile Friendly Layout

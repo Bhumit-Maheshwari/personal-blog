@@ -5,11 +5,18 @@ function Input(props) {
     <input
       {...props}
       style={{
-        padding: '12px',
-        borderRadius: 'var(--radius-md)',
-        border: '1px solid var(--color-border)',
+
         width: '100%',
-        marginTop: '10px'
+
+        padding: '14px',
+
+        borderRadius: 'var(--radius-md)',
+
+        border: '1px solid var(--color-border)',
+
+        marginTop: '12px',
+
+        fontSize: 'var(--text-md)'
       }}
     />
 

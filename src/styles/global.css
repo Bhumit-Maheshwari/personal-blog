@@ -69,3 +69,93 @@ a {
 .page {
   padding: 40px;
 }
+
+
+body {
+
+  line-height: var(--line-height-md);
+
+  font-size: var(--text-md);
+}
+
+/* HEADINGS */
+
+h1 {
+
+  font-size: var(--text-2xl);
+
+  margin-bottom: 20px;
+}
+
+h2 {
+
+  font-size: var(--text-xl);
+
+  margin-bottom: 12px;
+}
+
+p {
+
+  color: var(--color-text-secondary);
+}
+
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .page {
+
+    padding: 20px;
+  }
+
+  nav {
+
+    flex-direction: column;
+
+    gap: 16px;
+
+    padding: 20px;
+  }
+
+  .nav-links {
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+  }
+
+  h1 {
+
+    font-size: 28px;
+  }
+
+  h2 {
+
+    font-size: 22px;
+  }
+
+  button {
+
+    width: 100%;
+  }
+}
+
+/* =========================
+   TABLET RESPONSIVE
+========================= */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .page {
+
+    padding: 30px;
+  }
+
+  h1 {
+
+    font-size: 36px;
+  }
+}
