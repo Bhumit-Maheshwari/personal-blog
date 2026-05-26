@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom'
+
 import Card from './Card'
 import Button from './Button'
-import { Link } from 'react-router-dom'
 
 function ArticleCard({ article }) {
 
@@ -8,34 +9,43 @@ function ArticleCard({ article }) {
 
     <Card>
 
-      <h2>
-        {article.title}
-      </h2>
+      <div>
 
-      <p>
-        {article.description}
-      </p>
+        <span
+          style={{
+            color: 'var(--color-primary)',
+            fontWeight: '600'
+          }}
+        >
+          {article.tag}
+        </span>
 
-      <br />
+        <br />
+        <br />
 
-      <strong>
-        Tag:
-      </strong>
+        <h2>
+          {article.title}
+        </h2>
 
-      {article.tag}
+        <p>
+          {article.description}
+        </p>
 
-      <br />
-      <br />
-      <Link to={`/article/${article.slug}`}>
+        <br />
 
-        <Button>
-          Read More
-        </Button>
+        <Link
+          to={`/article/${article.slug}`}
+        >
 
-      </Link>
+          <Button>
+            Read More
+          </Button>
+
+        </Link>
+
+      </div>
 
     </Card>
-
   )
 }
 

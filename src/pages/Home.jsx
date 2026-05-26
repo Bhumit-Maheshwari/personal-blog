@@ -73,11 +73,30 @@ function Home() {
               onClick={() =>
                 setSelectedTag(tag)
               }
-              style={{
-                marginRight: '10px',
-                padding: '10px',
-                cursor: 'pointer'
-              }}
+             style={{
+
+              marginRight: '10px',
+
+              marginBottom: '10px',
+
+              padding: '10px 18px',
+
+              borderRadius: '8px',
+
+              border: 'none',
+
+              background:
+                selectedTag === tag
+                ? 'var(--color-primary)'
+                : 'var(--color-surface)',
+
+              color:
+              selectedTag === tag
+              ? 'white'
+              : 'var(--color-text-primary)',
+
+              cursor: 'pointer'
+          }}
             >
 
               {tag}

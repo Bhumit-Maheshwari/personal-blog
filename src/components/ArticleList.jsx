@@ -4,7 +4,9 @@ function ArticleList({ articles }) {
 
   return (
 
-    <div>
+    <div
+      className="article-grid"
+    >
 
       {
         articles.map((article) => (

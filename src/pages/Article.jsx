@@ -43,6 +43,13 @@ function Article() {
         </Heading>
 
         <Card>
+          <div className="markdown-content">
+
+              <ReactMarkdown>
+                  {article.content}
+              </ReactMarkdown>
+
+          </div>
 
           <ReactMarkdown>
 
