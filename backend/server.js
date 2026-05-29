@@ -6,6 +6,12 @@ const dotenv = require('dotenv')
 
 const connectDB = require('./config/db')
 
+const articleRoutes =
+  require('./routes/articleRoutes')
+
+const authorRoutes =
+  require('./routes/authorRoutes')
+
 dotenv.config()
 
 connectDB()
@@ -15,6 +21,16 @@ const app = express()
 app.use(cors())
 
 app.use(express.json())
+
+app.use(
+  '/api/articles',
+  articleRoutes
+)
+
+app.use(
+  '/api/authors',
+  authorRoutes
+)
 
 app.get('/', (req, res) => {
 

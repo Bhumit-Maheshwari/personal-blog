@@ -1,0 +1,8 @@
+# Use this workspace to collaborate
+workspace:
+  id: 0eee5823-eb91-47cf-8fcc-128b81482bfd
+
+localResources:
+  docs:
+    - ..\README.md
+    - ..\backend-plan.md
