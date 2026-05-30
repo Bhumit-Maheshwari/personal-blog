@@ -1,6 +1,13 @@
-import { useState } from 'react'
+/* import axios from 'axios'
 
-import articlesData from '../data/articles'
+import {
+  useEffect,
+  useState
+} from 'react'
+
+//import { useState } from 'react'
+
+//import articlesData from '../data/articles'
 
 import Container from '../components/ui/Container'
 import Heading from '../components/ui/Heading'
@@ -14,7 +21,7 @@ function Home() {
   const [search, setSearch] = useState('')
 
   const [selectedTag, setSelectedTag] =
-    useState('All')
+  useState('All')
 
   const tags = [
     'All',
@@ -29,8 +36,8 @@ function Home() {
 
       const matchesSearch =
         article.title
-          .toLowerCase()
-          .includes(search.toLowerCase())
+         .toLowerCase()
+         .includes(search.toLowerCase())
 
       const matchesTag =
         selectedTag === 'All'
@@ -39,6 +46,36 @@ function Home() {
 
       return matchesSearch && matchesTag
     })
+
+    const [articles, setArticles] =
+  useState([])
+
+  useEffect(() => {
+
+  const fetchArticles =
+    async () => {
+
+      try {
+
+        const response =
+          await axios.get(
+            'http://localhost:5000/api/articles'
+          )
+
+        setArticles(
+          response.data
+        )
+
+      } catch (error) {
+
+        console.log(error)
+      }
+    }
+
+  fetchArticles()
+
+}, [])
+
 
   return (
 
@@ -116,6 +153,92 @@ function Home() {
       </div>
 
     </Container>
+  )
+}
+
+export default Home */
+
+import axios from 'axios'
+
+import {
+  useEffect,
+  useState
+} from 'react'
+
+function Home() {
+
+  const [articles, setArticles] =
+    useState([])
+
+  useEffect(() => {
+
+    const fetchArticles =
+      async () => {
+
+        try {
+
+          const response =
+            await axios.get(
+              'http://localhost:5000/api/articles'
+            )
+
+          console.log(response.data)
+
+          setArticles(
+            response.data
+          )
+
+        } catch (error) {
+
+          console.log(error)
+        }
+      }
+
+    fetchArticles()
+
+  }, [])
+
+  return (
+
+    <div
+      style={{
+        padding: '40px'
+      }}
+    >
+
+      <h1>
+        Blog Articles
+      </h1>
+
+      {
+        articles.map((article) => (
+
+          <div
+            key={article._id}
+
+            style={{
+              border:
+                '1px solid gray',
+
+              padding: '20px',
+
+              marginBottom: '20px'
+            }}
+          >
+
+            <h2>
+              {article.title}
+            </h2>
+
+            <p>
+              {article.slug}
+            </p>
+
+          </div>
+        ))
+      }
+
+    </div>
   )
 }
 
