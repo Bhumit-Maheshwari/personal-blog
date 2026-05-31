@@ -55,3 +55,12 @@ The project contains:
 - Typography System
 - Backend Architecture Planning
 - Mobile Friendly Layout
+
+## Full Stack Features
+
+- Express.js Backend
+- MongoDB Atlas Database
+- Axios API Integration
+- Live Article Fetching
+- CRUD REST APIs
+- Mongoose Schemas
