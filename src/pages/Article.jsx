@@ -112,7 +112,8 @@ z
 
 export default Article */
 
-import axios from 'axios'
+//import axios from 'axios'
+import api from '../api/api'
 
 import {
   useEffect,
@@ -142,11 +143,13 @@ function Article() {
         try {
 
           const response =
-            await axios.get(
+           /*  await axios.get(
 
               `http://localhost:5000/api/articles/${slug}`
-            )
-
+            ) */
+                await api.get(
+                 `/articles/${slug}`)
+                 
           console.log(
             response.data
           )

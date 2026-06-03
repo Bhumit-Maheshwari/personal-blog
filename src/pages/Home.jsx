@@ -158,8 +158,8 @@ function Home() {
 
 export default Home */
 
-import axios from 'axios'
-
+//import axios from 'axios'
+import api from '../api/api'
 import {
   useEffect,
   useState
@@ -177,11 +177,14 @@ function Home() {
 
         try {
 
-          const response =
+          /* const response =
             await axios.get(
               'http://localhost:5000/api/articles'
-            )
+            ) */
 
+          const response =
+            await api.get('/articles')
+            
           console.log(response.data)
 
           setArticles(
