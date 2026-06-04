@@ -160,12 +160,27 @@ export default Home */
 
 //import axios from 'axios'
 import api from '../api/api'
+
 import {
   useEffect,
   useState
 } from 'react'
 
+import LoadingSpinner
+from '../components/common/LoadingSpinner'
+
+import EmptyState
+from '../components/common/EmptyState'
+
 function Home() {
+
+  //this is loading state to show loading spinner while fetching data
+  const [loading, setLoading] =
+  useState(true)
+
+  //this is error state to show error message if fetching data fails
+  const [error, setError] =
+  useState(null)
 
   const [articles, setArticles] =
     useState([])
@@ -187,13 +202,17 @@ function Home() {
             
           console.log(response.data)
 
-          setArticles(
-            response.data
-          )
+          setArticles(response.data)
+
+          setLoading(false)
 
         } catch (error) {
 
           console.log(error)
+
+          setLoading(false)
+
+          setError('Failed to load articles')
         }
       }
 
@@ -201,6 +220,29 @@ function Home() {
 
   }, [])
 
+  if (loading) {
+
+  return <LoadingSpinner />
+}
+
+if (
+ articles.length === 0
+) {
+
+ return <EmptyState />
+}
+
+if (error) {
+
+ return (
+
+  <h2>
+
+   {error}
+
+  </h2>
+ )
+}
   return (
 
     <div

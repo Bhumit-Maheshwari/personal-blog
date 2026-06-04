@@ -115,6 +115,9 @@ export default Article */
 //import axios from 'axios'
 import api from '../api/api'
 
+import LoadingSpinner
+from '../components/common/LoadingSpinner'
+
 import {
   useEffect,
   useState
@@ -128,6 +131,14 @@ import ReactMarkdown
   from 'react-markdown'
 
 function Article() {
+
+  //this is loading state to show loading spinner while fetching data
+  const [loading, setLoading] =
+    useState(true)
+
+  //this is error state to show error message if fetching data fails
+  const [error, setError] =
+  useState(null)
 
   const { slug } =
     useParams()
@@ -158,9 +169,15 @@ function Article() {
             response.data
           )
 
+          setLoading(false)
+
         } catch (error) {
 
           console.log(error)
+
+          setLoading(false)
+
+          setError('Failed to load article')
         }
       }
 
@@ -181,6 +198,22 @@ function Article() {
     )
   }
 
+  if (loading) {
+
+  return <LoadingSpinner />
+}
+
+if (error) {
+
+ return (
+
+  <h2>
+
+   {error}
+
+  </h2>
+ )
+}
   return (
 
     <div
