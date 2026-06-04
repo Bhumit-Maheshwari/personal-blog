@@ -1,164 +1,3 @@
-/* import axios from 'axios'
-
-import {
-  useEffect,
-  useState
-} from 'react'
-
-//import { useState } from 'react'
-
-//import articlesData from '../data/articles'
-
-import Container from '../components/ui/Container'
-import Heading from '../components/ui/Heading'
-import Input from '../components/ui/Input'
-import ThemeToggle from '../components/ui/ThemeToggle'
-
-import ArticleList from '../components/ArticleList'
-
-function Home() {
-
-  const [search, setSearch] = useState('')
-
-  const [selectedTag, setSelectedTag] =
-  useState('All')
-
-  const tags = [
-    'All',
-    'React',
-    'JavaScript',
-    'CSS',
-    'Node'
-  ]
-
-  const filteredArticles =
-    articlesData.filter((article) => {
-
-      const matchesSearch =
-        article.title
-         .toLowerCase()
-         .includes(search.toLowerCase())
-
-      const matchesTag =
-        selectedTag === 'All'
-          ? true
-          : article.tag === selectedTag
-
-      return matchesSearch && matchesTag
-    })
-
-    const [articles, setArticles] =
-  useState([])
-
-  useEffect(() => {
-
-  const fetchArticles =
-    async () => {
-
-      try {
-
-        const response =
-          await axios.get(
-            'http://localhost:5000/api/articles'
-          )
-
-        setArticles(
-          response.data
-        )
-
-      } catch (error) {
-
-        console.log(error)
-      }
-    }
-
-  fetchArticles()
-
-}, [])
-
-
-  return (
-
-    <Container>
-
-      <div className="page">
-
-        <ThemeToggle />
-
-        <Heading>
-          Blog Articles
-        </Heading>
-
-        <br />
-
-        <Input
-          placeholder="Search articles..."
-          value={search}
-          onChange={(e) =>
-            setSearch(e.target.value)
-          }
-        />
-
-        <br />
-        <br />
-
-        {
-          tags.map((tag) => (
-
-            <button
-              key={tag}
-              onClick={() =>
-                setSelectedTag(tag)
-              }
-             style={{
-
-              marginRight: '10px',
-
-              marginBottom: '10px',
-
-              padding: '10px 18px',
-
-              borderRadius: '8px',
-
-              border: 'none',
-
-              background:
-                selectedTag === tag
-                ? 'var(--color-primary)'
-                : 'var(--color-surface)',
-
-              color:
-              selectedTag === tag
-              ? 'white'
-              : 'var(--color-text-primary)',
-
-              cursor: 'pointer'
-          }}
-            >
-
-              {tag}
-
-            </button>
-
-          ))
-        }
-
-        <br />
-        <br />
-
-        <ArticleList
-          articles={filteredArticles}
-        />
-
-      </div>
-
-    </Container>
-  )
-}
-
-export default Home */
-
-//import axios from 'axios'
 import api from '../api/api'
 
 import {
@@ -172,6 +11,11 @@ from '../components/common/LoadingSpinner'
 import EmptyState
 from '../components/common/EmptyState'
 
+import {
+  useSearchParams
+}
+from 'react-router-dom'
+
 function Home() {
 
   //this is loading state to show loading spinner while fetching data
@@ -182,21 +26,31 @@ function Home() {
   const [error, setError] =
   useState(null)
 
+  //this is current page state for pagination
+  const [currentPage, setCurrentPage] =
+  useState(1)
+
+  const articlesPerPage = 6
+
+  //this is the state for search parameters in the URL
+  const [
+  searchParams,
+  setSearchParams
+  ] = useSearchParams()
+
+  //this is the state for the articles
   const [articles, setArticles] =
     useState([])
 
   useEffect(() => {
 
+    //this function fetches articles from the backend API
     const fetchArticles =
       async () => {
 
         try {
 
-          /* const response =
-            await axios.get(
-              'http://localhost:5000/api/articles'
-            ) */
-
+          //using the api instance we created with axios to make the request    
           const response =
             await api.get('/articles')
             
@@ -220,30 +74,67 @@ function Home() {
 
   }, [])
 
+//this is the selected tag from the search parameters, we can use this to filter articles based on the tag
+const selectedTag =
+  searchParams.get('tag') || ''
+
+// Pagination Logic
+const filteredArticles =
+  selectedTag
+
+    ? articles.filter(
+
+        (article) =>
+
+          article.tags?.includes(
+            selectedTag
+          )
+
+      )
+
+    : articles
+
+
+const indexOfLastArticle =
+  currentPage * articlesPerPage
+
+const indexOfFirstArticle =
+  indexOfLastArticle - articlesPerPage
+
+const currentArticles =
+  articles.slice(
+    indexOfFirstArticle,
+    indexOfLastArticle
+  )
+
+const totalPages =
+  Math.ceil(
+    articles.length /
+    articlesPerPage
+  )
+
+
   if (loading) {
-
   return <LoadingSpinner />
-}
+  }
 
-if (
- articles.length === 0
-) {
+  if (articles.length === 0) 
+  {
+    return <EmptyState />
+  }
 
- return <EmptyState />
-}
+  if (error) {
 
-if (error) {
+    return (
 
- return (
+        <h2>
 
-  <h2>
+          {error}
 
-   {error}
-
-  </h2>
- )
-}
-  return (
+        </h2>
+      )
+    }
+    return (
 
     <div
       style={{
@@ -255,8 +146,54 @@ if (error) {
         Blog Articles
       </h1>
 
+        <div
+            style={{
+            marginBottom: '20px'
+          }}
+        >
+
+        <button
+            onClick={() =>
+            setSearchParams({})
+          }
+        >
+            All
+        </button>
+
+        <button
+              onClick={() =>
+              setSearchParams({
+              tag: 'React'
+            })
+          }
+        >
+            React
+        </button>
+
+        <button
+              onClick={() =>
+              setSearchParams({
+              tag: 'Node'
+              })
+            }
+          >
+            Node
+        </button>
+
+        <button
+              onClick={() =>
+              setSearchParams({
+              tag: 'MongoDB'
+            })
+          }
+        >
+          MongoDB
+        </button>
+
+      </div>
+
       {
-        articles.map((article) => (
+        currentArticles.map((article) =>  (
 
           <div
             key={article._id}
@@ -282,6 +219,39 @@ if (error) {
           </div>
         ))
       }
+
+      
+      <div
+         style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '10px',
+        marginTop: '30px'
+      }}
+      >
+
+      {Array.from(
+        { length: totalPages },
+            (_, index) => (
+
+      <button
+
+        key={index}
+
+        onClick={() =>
+          setCurrentPage(index + 1)
+        }
+
+      >
+
+        {index + 1}
+
+      </button>
+
+      )
+      )}
+
+      </div>
 
     </div>
   )
