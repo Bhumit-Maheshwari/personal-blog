@@ -7,13 +7,17 @@ const Author =
 
 /* GET AUTHORS */
 
-router.get('/', async (req, res) => {
 
-  const authors =
-    await Author.find()
+const {
+  getAuthors,
+  getAuthorById
+} = require(
+  '../controllers/authorController'
+)
 
-  res.json(authors)
-})
+router.get('/', getAuthors)
+
+router.get('/:id', getAuthorById)
 
 /* CREATE AUTHOR */
 

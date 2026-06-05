@@ -1,3 +1,7 @@
+import {
+  Link
+} from 'react-router-dom'
+
 import api from '../api/api'
 
 import LoadingSpinner
@@ -41,6 +45,12 @@ function Article() {
   const [message, setMessage] =
   useState('')
 
+  const [
+  relatedArticles,
+  setRelatedArticles
+] = useState([])
+
+
   //this is article state to store the fetched article
   const [article, setArticle] =
     useState(null)
@@ -54,16 +64,43 @@ function Article() {
         try {
 
           const response =
-           /*  await axios.get(
-
-              `http://localhost:5000/api/articles/${slug}`
-            ) */
+           
                 await api.get(
                  `/articles/${slug}`)
                  
           console.log(
             response.data
           )
+
+          const allArticles =
+              await api.get(
+                    '/articles'
+              )
+
+          const related =
+                allArticles.data.filter(
+
+                (item) =>
+
+                  item._id !==
+                  response.data._id
+
+                  &&
+
+                  item.tags?.some(
+
+                tag =>
+
+                  response.data.tags?.includes(
+                tag
+              )
+
+            )
+          )
+
+          setRelatedArticles(
+          related.slice(0, 3)
+        )
 
           //set comments state with the fetched comments or an empty array if there are no comments
           setComments(
@@ -312,6 +349,46 @@ const handleCommentSubmit =
             )
           )
         }
+
+      </div>
+
+      <div
+          style={{
+          marginTop: '40px'
+          }}
+      >
+
+      <h2>
+          Related Articles
+      </h2>
+
+      {
+          relatedArticles.map(
+
+            (item) => (
+
+            <div
+                key={item._id}
+                style={{
+                padding: '10px',
+                marginBottom: '10px',
+                border:
+                '1px solid #ddd',
+                borderRadius: '8px'
+              }}
+            >
+
+              <Link
+                  to={`/article/${item.slug}`}
+              >
+                  {item.title}
+              </Link>
+
+            </div>
+
+          )
+        )
+      }
 
       </div>
 
