@@ -5,7 +5,7 @@ function EmptyState() {
     <div
       style={{
         textAlign: 'center',
-        padding: '50px'
+        padding: '60px'
       }}
     >
 
@@ -14,7 +14,7 @@ function EmptyState() {
       </h2>
 
       <p>
-        Please add articles.
+        Try another filter or add new articles.
       </p>
 
     </div>

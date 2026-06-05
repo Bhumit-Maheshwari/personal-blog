@@ -1,0 +1,24 @@
+$kind: http-request
+name: http://localhost:5000/api/articles
+url: http://localhost:5000/api/articles
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"slug\": \"mern-stack\",\r
+
+    \r
+
+    \  \"title\": \"MERN Stack Guide\",\r
+
+    \r
+
+    \  \"body\": \"# MERN Stack\",\r
+
+    \r
+
+    \  \"tags\": [\"MERN\", \"React\"]\r
+
+    }"
+order: 1780663258781

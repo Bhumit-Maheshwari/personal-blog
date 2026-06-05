@@ -6,3 +6,6 @@ localResources:
   docs:
     - ..\README.md
     - ..\backend-plan.md
+    - ..\jwt-auth-notes.md
+    - ..\mysql-analytics-plan.md
+    - ..\api-integration-plan.md

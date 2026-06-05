@@ -5,13 +5,17 @@ function LoadingSpinner() {
     <div
       style={{
         textAlign: 'center',
-        padding: '50px'
+        padding: '60px'
       }}
     >
 
       <h2>
-        Loading...
+        Loading Articles...
       </h2>
+
+      <p>
+        Please wait.
+      </p>
 
     </div>
   )

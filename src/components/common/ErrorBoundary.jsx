@@ -38,11 +38,22 @@ extends React.Component {
 
    return(
 
-    <h2>
+        <div
+            style={{
+            textAlign: 'center',
+            padding: '60px'
+            }}
+        >
 
-     Something went wrong.
+        <h2>
+            Something Went Wrong
+        </h2>
 
-    </h2>
+        <p>
+            {error}
+        </p>
+
+        </div>
    )
   }
 

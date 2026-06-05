@@ -1,118 +1,3 @@
-/* import axios from 'axios'
-
-import {
-  useEffect,
-  useState
-} from 'react'
-
-import { useParams } from 'react-router-dom'
-
-import ReactMarkdown from 'react-markdown'
-
-import articles from '../data/articles'
-
-import Container from '../components/ui/Container'
-import Card from '../components/ui/Card'
-import Heading from '../components/ui/Heading'
-
-import comments from '../data/comments'
-
-import CommentList from '../components/CommentList'
-
-import CommentForm from '../components/CommentForm'
-
-function Article() {
-
-  const { slug } = useParams()
-
-  const article =
-    articles.find(
-      (item) => item.slug === slug
-    )
-
-  if (!article) {
-
-    return (
-      <h1>
-        Article Not Found
-      </h1>
-    )
-  }
-
-  const [article, setArticle] =
-  useState(null)
-
-  useEffect(() => {
-
-  const fetchArticle =
-    async () => {
-
-      try {
-
-        const response =
-          await axios.get(
-
-            `http://localhost:5000/api/articles/${slug}`
-          )
-
-        setArticle(
-          response.data
-        )
-
-      } catch (error) {
-
-        console.log(error)
-      }
-    }
-
-  fetchArticle()
-
-}, [slug])
-
-z
-  return (
-
-    <Container>
-
-      <div className="page">
-
-        <Heading>
-          {article.title}
-        </Heading>
-
-        <Card>
-          <div className="markdown-content">
-
-              <ReactMarkdown>
-                  {article.content}
-              </ReactMarkdown>
-
-          </div>
-
-          <ReactMarkdown>
-
-            {article.content}
-
-          </ReactMarkdown>
-
-        </Card>
-        <br />
-
-        <CommentList
-            comments={comments}
-        />
-
-        <CommentForm />
-
-      </div>
-
-    </Container>
-  )
-}
-
-export default Article */
-
-//import axios from 'axios'
 import api from '../api/api'
 
 import LoadingSpinner
@@ -140,12 +25,27 @@ function Article() {
   const [error, setError] =
   useState(null)
 
+  //this is slug from url params to fetch the article
   const { slug } =
     useParams()
 
+  //this is comments state to store comments of the article
+  const [comments, setComments] =
+  useState([])
+
+  //this is name state to store name of the commenter
+  const [name, setName] =
+  useState('')
+
+  //this is comment state to store comment text
+  const [message, setMessage] =
+  useState('')
+
+  //this is article state to store the fetched article
   const [article, setArticle] =
     useState(null)
 
+  //this useEffect will run when the component mounts and fetch the article data from the server
   useEffect(() => {
 
     const fetchArticle =
@@ -164,6 +64,11 @@ function Article() {
           console.log(
             response.data
           )
+
+          //set comments state with the fetched comments or an empty array if there are no comments
+          setComments(
+            response.data.comments || []
+        )
 
           setArticle(
             response.data
@@ -214,6 +119,45 @@ if (error) {
   </h2>
  )
 }
+
+//this function will handle comment submission and post the comment to the server, then fetch the updated comments and update the comments state
+const handleCommentSubmit =
+  async (e) => {
+
+    e.preventDefault()
+
+    try {
+
+      await api.post(
+
+        `/articles/${article._id}/comments`,
+
+        {
+          name,
+          message
+        }
+
+      )
+
+      const updatedArticle =
+        await api.get(
+
+          `/articles/${slug}`
+        )
+
+      setComments(
+        updatedArticle.data.comments
+      )
+
+      setName('')
+      setMessage('')
+
+    } catch (error) {
+
+      console.log(error)
+    }
+  }
+
   return (
 
     <div
@@ -235,6 +179,84 @@ if (error) {
 
         {article.slug}
       </p>
+
+    
+      <h2>
+          Comments
+      </h2>
+      {
+          comments.map(
+
+              (comment) => (
+
+          <div
+            key={comment._id}
+          >
+
+            <strong>
+              {comment.name}
+            </strong>
+
+            <p>
+              {comment.message}
+            </p>
+
+          </div>
+
+            )
+        )
+    }
+
+
+    <form
+  onSubmit={
+    handleCommentSubmit
+  }
+>
+
+  <input
+
+    type="text"
+
+    placeholder="Your Name"
+
+    value={name}
+
+    onChange={(e) =>
+      setName(
+        e.target.value
+      )
+    }
+
+  />
+
+  <br />
+
+  <textarea
+
+    placeholder="Comment"
+
+    value={message}
+
+    onChange={(e) =>
+      setMessage(
+        e.target.value
+      )
+    }
+
+  />
+
+  <br />
+
+  <button
+    type="submit"
+  >
+
+    Add Comment
+
+  </button>
+
+</form>
 
       <div
         style={{
