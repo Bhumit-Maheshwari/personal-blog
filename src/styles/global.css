@@ -195,3 +195,13 @@ p {
 
   padding-left: 20px;
 }
+
+button:focus,
+input:focus,
+textarea:focus,
+a:focus {
+
+  outline: 3px solid #2563EB;
+
+  outline-offset: 2px;
+}

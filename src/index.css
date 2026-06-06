@@ -109,3 +109,13 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+button:focus,
+input:focus,
+textarea:focus,
+a:focus {
+
+  outline: 3px solid #2563EB;
+
+  outline-offset: 2px;
+}

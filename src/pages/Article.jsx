@@ -257,6 +257,8 @@ const handleCommentSubmit =
 
     placeholder="Your Name"
 
+    aria-label="Commenter Name"
+
     value={name}
 
     onChange={(e) =>
@@ -273,6 +275,8 @@ const handleCommentSubmit =
 
     placeholder="Comment"
 
+    aria-label="Comment Message"
+
     value={message}
 
     onChange={(e) =>
@@ -287,6 +291,8 @@ const handleCommentSubmit =
 
   <button
     type="submit"
+
+    aria-label="Submit Comment"
   >
 
     Add Comment
@@ -380,6 +386,8 @@ const handleCommentSubmit =
 
               <Link
                   to={`/article/${item.slug}`}
+
+                  aria-label={`Read related article ${item.title}`}
               >
                   {item.title}
               </Link>

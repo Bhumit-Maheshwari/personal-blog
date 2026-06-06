@@ -146,6 +146,23 @@ const totalPages =
         Blog Articles
       </h1>
 
+      <input
+          type="text"
+
+          placeholder="Search articles..."
+
+          aria-label="Search articles"
+
+          style={{
+                  width: '100%',
+                  maxWidth: '500px',
+                  padding: '10px',
+                  marginBottom: '20px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px'
+          }}
+        />
+
         <div
             style={{
             marginBottom: '20px'
@@ -153,24 +170,31 @@ const totalPages =
         >
 
         <button
-            onClick={() =>
+          aria-label="Show all articles"
+
+          onClick={() =>
             setSearchParams({})
-          }
+            }
         >
-            All
+          All
         </button>
 
         <button
-              onClick={() =>
+            aria-label="Filter React articles"
+
+            onClick={() =>
               setSearchParams({
               tag: 'React'
-            })
-          }
+              })
+            }
         >
-            React
+          React
         </button>
+        
 
         <button
+            aria-label="Filter Node articles"
+
               onClick={() =>
               setSearchParams({
               tag: 'Node'
@@ -178,9 +202,11 @@ const totalPages =
             }
           >
             Node
-        </button>
+          </button>
 
         <button
+            aria-label="Filter MongoDB articles"
+
               onClick={() =>
               setSearchParams({
               tag: 'MongoDB'
@@ -237,6 +263,8 @@ const totalPages =
       <button
 
         key={index}
+
+        aria-label={`Go to page ${index + 1}`}
 
         onClick={() =>
           setCurrentPage(index + 1)
