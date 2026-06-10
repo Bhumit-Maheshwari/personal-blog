@@ -111,6 +111,11 @@ function Article() {
             response.data
           )
 
+          await api.post(
+
+            `/articles/${response.data._id}/view`
+          )
+
           setLoading(false)
 
         } catch (error) {

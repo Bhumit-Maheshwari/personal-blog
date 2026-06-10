@@ -48,3 +48,13 @@ app.listen(PORT, () => {
   )
 
 })
+
+const analyticsRoutes =
+require(
+'./routes/analyticsRoutes'
+)
+
+app.use(
+  '/api',
+  analyticsRoutes
+)
