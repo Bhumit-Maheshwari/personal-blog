@@ -11,6 +11,18 @@ import Article from '../pages/Article'
 import Author from '../pages/Author'
 import Admin from '../pages/Admin'
 
+import AdminDashboard
+from '../pages/admin/AdminDashboard'
+
+import AdminArticles
+from '../pages/admin/AdminArticles'
+
+import AdminNewArticle
+from '../pages/admin/AdminNewArticle'
+
+import AdminEditArticle
+from '../pages/admin/AdminEditArticle'
+
 function AppRoutes() {
 
   return (
@@ -35,6 +47,26 @@ function AppRoutes() {
         <Route
           path="/admin"
           element={<Admin />}
+        />
+
+        <Route
+          path="/admin/dashboard"
+          element={<AdminDashboard />}
+        />
+
+        <Route
+          path="/admin/articles"
+          element={<AdminArticles />}
+        />
+
+        <Route
+          path="/admin/articles/new"
+          element={<AdminNewArticle />}
+        />
+
+        <Route
+          path="/admin/articles/:id/edit"
+          element={<AdminEditArticle />}
         />
 
       </Routes>

@@ -18,11 +18,27 @@ const articleSchema = new mongoose.Schema({
     required: true
   },
 
+  excerpt: String,
+
+  imageUrl: String,
+
+  status: {
+    type: String,
+    enum: ['Published', 'Draft'],
+    default: 'Draft'
+  },
+
   tags: [
     {
       type: String
     }
   ],
+
+  status: {
+  type: String,
+  enum: ['Published', 'Draft'],
+  default: 'Published'
+  },
 
   authorId: {
     type: mongoose.Schema.Types.ObjectId,

@@ -33,16 +33,38 @@ const getArticleBySlug =
 const createArticle =
   async (req, res) => {
 
+    //const article =
+    //  await Article.create(req.body)
     const article =
-      await Article.create(req.body)
+    await Article.create({
+
+      title: req.body.title,
+
+      slug: req.body.slug,
+
+      excerpt: req.body.excerpt,
+
+      body: req.body.body,
+
+      imageUrl: req.body.imageUrl,
+
+      tags: req.body.tags,
+
+      status: req.body.status,
+
+      authorId: req.body.authorId
+
+    })
+    
 
     res.status(201).json(article)
 }
 
 /* UPDATE ARTICLE */
 
-const updateArticle =
-  async (req, res) => {
+const updateArticle = async (req, res) => {
+
+  try {
 
     const article =
       await Article.findByIdAndUpdate(
@@ -51,16 +73,28 @@ const updateArticle =
 
         req.body,
 
-        { new: true }
+        {
+          new: true
+        }
+
       )
 
     res.json(article)
+
+  } catch (error) {
+
+    res.status(500).json({
+      message:
+      'Update failed'
+    })
+  }
 }
 
 /* DELETE ARTICLE */
 
-const deleteArticle =
-  async (req, res) => {
+const deleteArticle = async (req, res) => {
+
+  try {
 
     await Article.findByIdAndDelete(
       req.params.id
@@ -68,8 +102,16 @@ const deleteArticle =
 
     res.json({
       message:
-        'Article deleted'
+      'Article deleted successfully'
     })
+
+  } catch (error) {
+
+    res.status(500).json({
+      message:
+      'Delete failed'
+    })
+  }
 }
 
 /* CREATE COMMENT */

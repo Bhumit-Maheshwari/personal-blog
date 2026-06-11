@@ -1,124 +1,147 @@
+import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import api from '../api/api'
 
-import {
-  useState
-} from 'react'
+import './Admin.css'
 
 function Admin() {
 
+  const navigate = useNavigate()
+  
   const [email, setEmail] =
     useState('')
 
-  const [
-    password,
-    setPassword
-  ] = useState('')
+  const [password, setPassword] =
+    useState('')
+    
 
-  const handleLogin =
-    async (e) => {
+  const [error, setError] =
+    useState('')
 
-      e.preventDefault()
+  const handleLogin = async (e) => {
+
+    e.preventDefault()
 
       try {
 
-        const response =
-          await api.post(
-
-            '/auth/admin-login',
-
-            {
-              email,
-              password
-            }
-
-          )
+        const response = await api.post(
+          '/auth/admin-login',
+        {
+            email,
+            password
+        }
+        )
 
         localStorage.setItem(
-
-          'token',
-
-          response.data.token
-
+        'token',
+        response.data.token
         )
 
-        alert(
-          'Admin Login Successful'
-        )
+        alert('Login Success')
+
+        navigate('/admin/dashboard')
 
       } catch (error) {
 
-        alert(
-          'Login Failed'
-        )
+          setError(
+          'Invalid Credentials'
+          )
       }
-    }
+  }
 
   return (
 
-    <div>
+  <div
+    className="admin-container"
+  >
+    
 
-      <h1>
-        Admin Login
-      </h1>
+    <h1
+      className="admin-title"
+    >
+      Personal Blog Admin
+    </h1>
 
-      <form
-        onSubmit={
-          handleLogin
-        }
+    <p
+      className="admin-subtitle"
+    >
+      Manage Articles, Authors and Analytics
+    </p>
+
+    {
+      error &&
+
+      <p
+        className="admin-error"
       >
+        {error}
+      </p>
+    }
+
+    <form
+      className="admin-form"
+      onSubmit={handleLogin}
+    >
+
+      <div>
+
+        <label>
+          Email Address
+        </label>
 
         <input
-
           type="email"
-
-          placeholder="Email"
-
+          placeholder="admin@personalblog.com"
           value={email}
-
           onChange={(e)=>
-
             setEmail(
               e.target.value
             )
-
           }
-
         />
 
-        <br />
+      </div>
+
+      <div>
+
+        <label>
+          Password
+        </label>
 
         <input
-
           type="password"
-
-          placeholder="Password"
-
+          placeholder="Enter Password"
           value={password}
-
           onChange={(e)=>
-
             setPassword(
               e.target.value
             )
-
           }
-
         />
 
-        <br />
+      </div>
 
-        <button
-          type="submit"
-        >
+      <button
+        className="admin-btn"
+        type="submit"
+      >
 
-          Login
+        Login
 
-        </button>
+      </button>
 
-      </form>
+    </form>
+
+    <div
+      className="admin-footer"
+    >
+
+      Secure JWT Authentication
 
     </div>
-  )
+
+  </div>
+)
 }
 
 export default Admin
