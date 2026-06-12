@@ -76,6 +76,49 @@ function AdminNewArticle() {
 
   }, [])
 
+  const uploadImage =
+  async (file) => {
+
+    const formData =
+      new FormData()
+
+    formData.append(
+      'file',
+      file
+    )
+
+    formData.append(
+      'upload_preset',
+      'personal_blog_images'
+    )
+
+    try {
+
+      const response =
+        await fetch(
+
+          'https://api.cloudinary.com/v1_1/dgowamccj/image/upload',
+
+          {
+            method: 'POST',
+            body: formData
+          }
+
+        )
+
+      const data =
+        await response.json()
+
+      setImageUrl(
+        data.secure_url
+      )
+
+    } catch (error) {
+
+      console.log(error)
+    }
+  }
+
   const handleSubmit =
     async (e) => {
 
@@ -191,23 +234,56 @@ function AdminNewArticle() {
 
         />
 
-        <input
+        <div>
 
-          type="text"
+            <label>Featured Image</label>
 
-          placeholder="Featured Image URL"
+          <input
 
-          value={imageUrl}
+              type="file"
 
-          onChange={(e)=>
+              accept="image/*"
 
-            setImageUrl(
-              e.target.value
+              onChange={(e) =>
+
+                  uploadImage(
+                      e.target.files[0]
+                  )
+
+              }
+
+          />
+
+          {
+              imageUrl && (
+
+              <div>
+
+                <img
+
+                    src={imageUrl}
+
+                    alt="Preview"
+
+                    style={{
+
+                    width: '250px',
+
+                    marginTop: '15px',
+
+                    borderRadius: '10px'
+
+                    }}
+
+                />
+
+              </div>
+
             )
+        }
 
-          }
+        </div>
 
-        />
 
         <input
 

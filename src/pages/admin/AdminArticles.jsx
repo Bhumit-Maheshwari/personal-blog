@@ -56,24 +56,22 @@ function AdminArticles() {
     async (id) => {
 
       const confirmDelete =
-        window.confirm(
-          'Delete article?'
-        )
+          window.confirm('Are you sure you want to delete this article?')
 
       if (!confirmDelete)
-        return
+      return
 
       try {
 
         await api.delete(
-          `/articles/${id}`
+            `/articles/${id}`
         )
 
         fetchArticles()
 
       } catch (error) {
 
-        console.log(error)
+            console.log(error)
       }
     }
 

@@ -46,7 +46,7 @@ function AdminEditArticle() {
     useState('')
 
   const [authorId, setAuthorId] =
-    useState('')
+  useState('')  
 
   const [status, setStatus] =
     useState('Draft')
@@ -54,6 +54,7 @@ function AdminEditArticle() {
   const [body, setBody] =
     useState('')
 
+  
   useEffect(() => {
 
     const fetchAuthors =
@@ -77,8 +78,7 @@ function AdminEditArticle() {
       }
 
     fetchAuthors()
-
-  }, [id])
+  }, [])
 
 
 useEffect(() => {
@@ -102,32 +102,24 @@ useEffect(() => {
 
       if(article){
 
-        setTitle(
-          article.title
-        )
+        setTitle(article.title || '')
 
-        setSlug(
-          article.slug
-        )
+        setSlug(article.slug || '')
 
-        setExcerpt(
-          article.excerpt
-        )
+        setExcerpt(article.excerpt || '')
 
-        setImageUrl(
-          article.imageUrl
-        )
+        setImageUrl(article.imageUrl || '')
+
+        setStatus(article.status || 'Draft')
+
+        setBody(article.body || '')
 
         setTags(
-          article.tags.join(',')
+        article.tags?.join(',') || ''
         )
 
-        setStatus(
-          article.status
-        )
-
-        setBody(
-          article.body
+        setAuthorId(
+        article.authorId || ''
         )
 
       }
@@ -137,54 +129,7 @@ useEffect(() => {
 
 }, [id])
 
-  const handleSubmit =
-    async (e) => {
-
-      e.preventDefault()
-
-      try {
-
-        await api.post(
-
-          '/articles',
-
-          {
-
-            title,
-
-            slug,
-
-            excerpt,
-
-            imageUrl,
-
-            body,
-
-            authorId,
-
-            status,
-
-            tags:
-            tags.split(',')
-
-          }
-
-        )
-
-        alert(
-          'Article Created Successfully'
-        )
-
-        navigate(
-          '/admin/articles'
-        )
-
-      } catch (error) {
-
-        console.log(error)
-      }
-    }
-
+  
   const handleUpdate =
   async (e) => {
 
@@ -300,15 +245,15 @@ useEffect(() => {
 
           placeholder="Featured Image URL"
 
-          value={imageUrl}
+          value={imageUrl || ''}
 
-          onChange={(e)=>
+          onChange={(e) =>
 
-            setImageUrl(
+          setImageUrl(
               e.target.value
-            )
+          )
 
-          }
+         }
 
         />
 
@@ -318,21 +263,20 @@ useEffect(() => {
 
           placeholder="Tags (React, Node, MongoDB)"
 
-          value={tags}
+          value={tags || ''}
 
-          onChange={(e)=>
+          onChange={(e) =>
 
-            setTags(
-              e.target.value
-            )
-
+              setTags(
+                  e.target.value
+              )
           }
 
         />
 
         <select
 
-          value={authorId}
+           value={authorId || ''}
 
           onChange={(e)=>
 
@@ -350,7 +294,7 @@ useEffect(() => {
 
           {
 
-            authors.map(
+            authors?.map(
 
               author => (
 
@@ -378,7 +322,7 @@ useEffect(() => {
 
         <select
 
-          value={status}
+          value={status || 'Draft'}
 
           onChange={(e)=>
 
@@ -406,9 +350,12 @@ useEffect(() => {
 
           <MDEditor
 
-            value={body}
+            value={body || ''}
 
-            onChange={setBody}
+            onChange={(value) =>
+
+                setBody(value || '')
+            }
 
             height={500}
 
