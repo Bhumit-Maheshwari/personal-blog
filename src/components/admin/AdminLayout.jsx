@@ -47,9 +47,9 @@ function AdminLayout({ children }) {
 
     </Link>
 
-    <Link to="/admin/analytics">
+    <Link to="/admin/stats">
 
-      📈 Analytics
+      📊 Analytics
 
     </Link>
 

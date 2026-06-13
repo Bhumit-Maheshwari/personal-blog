@@ -15,6 +15,11 @@ const authorRoutes =
 const authRoutes =
 require('./routes/authRoutes')
 
+const analyticsRoutes =
+require(
+'./routes/analyticsRoutes'
+)
+
 dotenv.config()
 
 connectDB()
@@ -35,6 +40,11 @@ app.use(
   authorRoutes
 )
 
+app.use(
+  '/api',
+  analyticsRoutes
+)
+
 app.get('/', (req, res) => {
 
   res.send('Backend Server Running')
@@ -44,20 +54,12 @@ app.get('/', (req, res) => {
 const PORT =
   process.env.PORT || 5000
 
-const analyticsRoutes =
-require(
-'./routes/analyticsRoutes'
-)
-
-app.use(
-  '/api',
-  analyticsRoutes
-)
 
 app.use(
  '/api/auth',
  authRoutes
 )
+
 
 app.listen(PORT, () => {
 

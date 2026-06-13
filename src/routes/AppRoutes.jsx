@@ -23,6 +23,9 @@ from '../pages/admin/AdminNewArticle'
 import AdminEditArticle
 from '../pages/admin/AdminEditArticle'
 
+import AdminStats
+from '../pages/admin/AdminStats'
+
 function AppRoutes() {
 
   return (
@@ -67,6 +70,11 @@ function AppRoutes() {
         <Route
           path="/admin/articles/:id/edit"
           element={<AdminEditArticle />}
+        />
+
+        <Route
+          path="/admin/stats"
+          element={<AdminStats />}
         />
 
       </Routes>
