@@ -109,7 +109,7 @@ const deleteArticle = async (req, res) => {
 
     res.status(500).json({
       message:
-      'Delete failed'
+      error.message
     })
   }
 }
