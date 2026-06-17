@@ -16,6 +16,27 @@ import {
 }
 from 'react-router-dom'
 
+import Hero
+from '../components/home/Hero'
+
+import FeaturedArticles
+from '../components/home/FeaturedArticles'
+
+import Categories
+from '../components/home/Categories'
+
+import TopAuthors
+from '../components/home/TopAuthors'
+
+import Newsletter
+from '../components/home/Newsletter'
+
+import Footer
+from '../components/home/Footer'
+
+import SEO
+from '../components/common/SEO'
+
 function Home() {
 
   //this is loading state to show loading spinner while fetching data
@@ -102,17 +123,16 @@ const indexOfFirstArticle =
   indexOfLastArticle - articlesPerPage
 
 const currentArticles =
-  articles.slice(
+  filteredArticles.slice(
     indexOfFirstArticle,
     indexOfLastArticle
   )
 
 const totalPages =
   Math.ceil(
-    articles.length /
+    filteredArticles.length /
     articlesPerPage
   )
-
 
   if (loading) {
   return <LoadingSpinner />
@@ -142,6 +162,27 @@ const totalPages =
       }}
     >
 
+      <SEO
+
+          title="Personal Blog Platform"
+
+          description="Read articles about React, Node, MongoDB and Web Development."
+
+          image="https://your-logo-url.com/logo.png"
+
+          url={window.location.href}
+      />
+
+      <Hero />
+
+      <FeaturedArticles />
+
+      <Categories />
+
+      <TopAuthors />
+
+      <Newsletter />
+      
       <h1>
         Blog Articles
       </h1>
@@ -280,6 +321,8 @@ const totalPages =
       )}
 
       </div>
+
+      <Footer />
 
     </div>
   )

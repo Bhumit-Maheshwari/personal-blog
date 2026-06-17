@@ -1,0 +1,41 @@
+.authors{
+  padding:80px 10%;
+  background:white;
+}
+
+.authors-title{
+  margin-bottom:40px;
+}
+
+.author-grid{
+  display:grid;
+  grid-template-columns:
+  repeat(auto-fit,minmax(250px,1fr));
+  gap:30px;
+}
+
+.author-card{
+  text-align:center;
+  background:#fff;
+  padding:30px;
+  border-radius:20px;
+
+  box-shadow:
+  0 8px 25px rgba(0,0,0,.08);
+}
+
+.author-card img{
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:15px;
+}
+
+.author-card h3{
+  color:#0f172a;
+}
+
+.author-card p{
+  color:#64748b;
+}

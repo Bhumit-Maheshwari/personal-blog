@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<urlset
+
+xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+
+    <loc>
+
+      https://localhost:5173
+
+    </loc>
+
+  </url>
+
+  <url>
+
+    <loc>
+
+      https://localhost:5173/article/react-guide
+
+    </loc>
+
+  </url>
+
+  <url>
+
+    <loc>
+
+      https://localhost:5173/article/node-tutorial
+
+    </loc>
+
+  </url>
+
+  <url>
+
+    <loc>
+
+      https://localhost:5173/admin
+
+    </loc>
+
+  </url>
+
+</urlset>

@@ -9,6 +9,12 @@ import {
   useParams
 } from 'react-router-dom'
 
+import LoadingSpinner
+from '../components/common/LoadingSpinner'
+
+import SEO
+from '../components/common/SEO'
+
 function Author() {
 
   const { id } = useParams()
@@ -68,6 +74,18 @@ if (error) {
 
   return (
     <div>
+
+      <SEO
+
+          title="Personal Blog Platform"
+
+          description="Read articles about React, Node, MongoDB and Web Development."
+
+          image="https://your-logo-url.com/logo.png"
+
+          url={window.location.href}
+      />
+
 
     <img
 

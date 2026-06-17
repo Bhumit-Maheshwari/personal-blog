@@ -19,6 +19,9 @@ import {
 import ReactMarkdown
   from 'react-markdown'
 
+import SEO
+from '../components/common/SEO'
+
 function Article() {
 
   //this is loading state to show loading spinner while fetching data
@@ -209,6 +212,26 @@ const handleCommentSubmit =
         margin: '0 auto'
       }}
     >
+
+
+      <SEO
+
+          title={article.title}
+
+          description={
+            article.excerpt ||
+            article.body.slice(0,120)
+          }
+
+          image={
+            article.imageUrl
+          }
+
+          url={
+            window.location.href
+          }
+
+        />
 
       <h1>
         {article.title}

@@ -1,5 +1,10 @@
 import React from 'react'
+
 import ReactDOM from 'react-dom/client'
+
+import {
+  HelmetProvider
+} from 'react-helmet-async'
 
 import App from './App'
 
@@ -9,10 +14,22 @@ import './styles/global.css'
 import ErrorBoundary
 from './components/common/ErrorBoundary'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(
+  document.getElementById('root')
+).render(
+
   <React.StrictMode>
-    <ErrorBoundary>
+
+    <HelmetProvider>
+
+      <ErrorBoundary>
+
         <App />
-    </ErrorBoundary>
-  </React.StrictMode>,
+
+      </ErrorBoundary>
+
+    </HelmetProvider>
+
+  </React.StrictMode>
+
 )
