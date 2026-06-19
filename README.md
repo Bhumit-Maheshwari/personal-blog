@@ -2,65 +2,57 @@
 
 ## Project Overview
 
-This is a React.js internship project built using Vite and React Router.
-
-The project contains:
-- Home Page
-- Article Page
-- Author Page
-- Admin Dashboard
-- Reusable Design System
-- Dark Mode Toggle
-
----
-
-## Technologies Used
-
-- React.js
-- Vite
-- React Router DOM
-- Axios
-- React Markdown
-
----
+Briefly describe the Personal Blog Platform and its purpose.
 
 ## Features
+    Article Management
+    Admin Dashboard
+    Authentication (JWT)
+    Comments
+    Analytics Dashboard
+    Image Upload
+    SEO Optimization
+    Responsive Design
+    Dark Mode
 
-- Dynamic Routing
-- Reusable UI Components
-- CSS Design Tokens
-- Dark Mode with localStorage Persistence
+## Tech Stack
+    # Frontend
+        React.js
+        React Router
+    # Backend
+        Axios
+        React Markdown
+        React Helmet Async
+    # Backend
+        Node.js
+        Express.js
+    # Databases
+        MongoDB Atlas
+        Aiven MySQL
+    # Cloud Services
+        Render
+        Vercel
+        Cloudinary
 
----
+## Live URLs
 
-## Light Mode
+    Frontend:
 
-<img width="837" height="391" alt="image" src="https://github.com/user-attachments/assets/e4607280-be07-412d-96d8-81db255adb8e" />
+        https://personal-blog-lovat-nine.vercel.app
+
+    Backend:
+
+        https://personal-blog-api-2yiy.onrender.com
 
 
----
+# Screenshots
 
-## Dark Mode
+## Home Page (Light Mode)
 
-<img width="823" height="407" alt="image" src="https://github.com/user-attachments/assets/c38ec8f5-55c2-4527-8db7-2faf1d113c1f" />
+![Light Mode](screenshots/light-mode-home.png)
 
-## UPDATE FEATURES SECTION
+## Home Page (Dark Mode)
 
-- Article List Rendering
-- Search Functionality
-- Tag Filtering
-- Mock JSON Data
+![Dark Mode](screenshots/dark-mode-home.png)
 
-- Responsive Design
-- Typography System
-- Backend Architecture Planning
-- Mobile Friendly Layout
 
-## Full Stack Features
-
-- Express.js Backend
-- MongoDB Atlas Database
-- Axios API Integration
-- Live Article Fetching
-- CRUD REST APIs
-- Mongoose Schemas
