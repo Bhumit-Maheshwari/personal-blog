@@ -25,7 +25,7 @@ const articleSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ['Published', 'Draft'],
-    default: 'Draft'
+    default: 'Published'
   },
 
   tags: [
@@ -34,15 +34,14 @@ const articleSchema = new mongoose.Schema({
     }
   ],
 
-  status: {
-  type: String,
-  enum: ['Published', 'Draft'],
-  default: 'Published'
-  },
-
   authorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Author'
+  },
+
+  viewCount: {
+    type: Number,
+    default: 0
   },
 
   publishedAt: {
@@ -50,7 +49,7 @@ const articleSchema = new mongoose.Schema({
     default: Date.now
   }
 
-})
+}, { timestamps: true })
 
 module.exports =
   mongoose.model(

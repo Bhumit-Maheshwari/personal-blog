@@ -1,53 +1,140 @@
+/* ========================================
+   DESIGN TOKENS — Premium Design System
+   ======================================== */
+
 :root {
+  /* Primary Colors */
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-light: rgba(99, 102, 241, 0.1);
+  --color-primary-glow: rgba(99, 102, 241, 0.3);
 
-  /* COLORS */
-  --color-primary: #2563EB;
-  --color-background: #F8FAFC;
-  --color-surface: #FFFFFF;
-  --color-text-primary: #0F172A;
-  --color-text-secondary: #475569;
-  --color-border: #E2E8F0;
+  /* Surfaces */
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;
+  --color-surface-glass: rgba(255, 255, 255, 0.7);
 
-  /* TYPOGRAPHY */
+  /* Text */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3af;
 
---font-heading: 'Poppins', sans-serif;
---font-body: 'Inter', sans-serif;
+  /* Borders */
+  --color-border: #e2e8f0;
+  --color-border-light: #f1f5f9;
 
-/* FONT SIZES */
+  /* Status */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
 
---text-xs: 12px;
---text-sm: 14px;
---text-md: 16px;
---text-lg: 22px;
---text-xl: 32px;
---text-2xl: 42px;
+  /* Aliases — Admin.css compatibility */
+  --card-bg: var(--color-surface);
+  --border-color: var(--color-border);
+  --input-bg: var(--color-background);
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --primary: var(--color-primary);
 
-/* LINE HEIGHT */
+  /* Typography */
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
 
---line-height-sm: 1.4;
---line-height-md: 1.6;
---line-height-lg: 1.8;
+  /* Font Sizes */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.5rem;
+  --text-4xl: 3.5rem;
 
-  /* SPACING */
+  /* Line Heights */
+  --line-height-sm: 1.4;
+  --line-height-md: 1.6;
+  --line-height-lg: 1.8;
+
+  /* Spacing */
+  --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
 
-  /* BORDER RADIUS */
+  /* Border Radius */
+  --radius-sm: 8px;
   --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
 
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
+  --shadow-glow: 0 0 30px rgba(99, 102, 241, 0.15);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a78bfa 100%);
+  --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+  /* Animation */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* Glass */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --backdrop-blur: blur(12px);
 }
 
-/* DARK MODE */
+/* ========================================
+   DARK MODE
+   ======================================== */
 
 .dark {
+  --color-primary: #818cf8;
+  --color-primary-hover: #6366f1;
+  --color-primary-light: rgba(129, 140, 248, 0.1);
+  --color-primary-glow: rgba(129, 140, 248, 0.3);
 
-  --color-primary: #3B82F6;
-  --color-background: #0F172A;
-  --color-surface: #1E293B;
-  --color-text-primary: #F8FAFC;
-  --color-text-secondary: #CBD5E1;
-  --color-border: #334155;
+  --color-background: #0b0f1a;
+  --color-surface: #151b2e;
+  --color-surface-hover: #1e293b;
+  --color-surface-glass: rgba(21, 27, 46, 0.8);
 
+  --color-text-primary: #e2e8f0;
+  --color-text-secondary: #94a3af;
+  --color-text-muted: #64748b;
+
+  --color-border: #1e293b;
+  --color-border-light: #1a2236;
+
+  /* Aliases */
+  --card-bg: var(--color-surface);
+  --border-color: var(--color-border);
+  --input-bg: #0f172a;
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --primary: var(--color-primary);
+
+  /* Dark Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 30px rgba(129, 140, 248, 0.2);
+
+  /* Dark Glass */
+  --glass-bg: rgba(21, 27, 46, 0.8);
+  --glass-border: rgba(30, 41, 59, 0.5);
+
+  --gradient-hero: linear-gradient(135deg, #312e81 0%, #4c1d95 100%);
 }

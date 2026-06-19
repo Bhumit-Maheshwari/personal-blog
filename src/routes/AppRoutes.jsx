@@ -9,6 +9,9 @@ import Navbar from '../components/layout/Navbar'
 import Home from '../pages/Home'
 import Article from '../pages/Article'
 import Author from '../pages/Author'
+import Authors from '../pages/Authors'
+import About from '../pages/About'
+import NotFound from '../pages/NotFound'
 import Admin from '../pages/Admin'
 
 import AdminDashboard
@@ -25,6 +28,9 @@ from '../pages/admin/AdminEditArticle'
 
 import AdminStats
 from '../pages/admin/AdminStats'
+
+import AdminAuthors
+from '../pages/admin/AdminAuthors'
 
 function AppRoutes() {
 
@@ -45,6 +51,16 @@ function AppRoutes() {
         <Route
           path="/author/:id"
           element={<Author />}
+        />
+
+        <Route
+          path="/authors"
+          element={<Authors />}
+        />
+
+        <Route
+          path="/about"
+          element={<About />}
         />
 
         <Route
@@ -77,10 +93,20 @@ function AppRoutes() {
           element={<AdminStats />}
         />
 
+        <Route
+          path="/admin/authors"
+          element={<AdminAuthors />}
+        />
+
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
+
       </Routes>
 
     </BrowserRouter>
   )
 }
 
-export default AppRoutes
+export default AppRoutes

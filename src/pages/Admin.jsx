@@ -59,7 +59,7 @@ function Admin() {
     <h1
       className="admin-title"
     >
-      Personal Blog Admin
+      Jigyasa Admin
     </h1>
 
     <p

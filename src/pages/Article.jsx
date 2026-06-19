@@ -22,29 +22,25 @@ import ReactMarkdown
 import SEO
 from '../components/common/SEO'
 
+import fallbackArticles from '../data/articles'
+
 function Article() {
 
-  //this is loading state to show loading spinner while fetching data
   const [loading, setLoading] =
     useState(true)
 
-  //this is error state to show error message if fetching data fails
   const [error, setError] =
   useState(null)
 
-  //this is slug from url params to fetch the article
   const { slug } =
     useParams()
 
-  //this is comments state to store comments of the article
   const [comments, setComments] =
   useState([])
 
-  //this is name state to store name of the commenter
   const [name, setName] =
   useState('')
 
-  //this is comment state to store comment text
   const [message, setMessage] =
   useState('')
 
@@ -53,12 +49,9 @@ function Article() {
   setRelatedArticles
 ] = useState([])
 
-
-  //this is article state to store the fetched article
   const [article, setArticle] =
     useState(null)
 
-  //this useEffect will run when the component mounts and fetch the article data from the server
   useEffect(() => {
 
     const fetchArticle =
@@ -105,7 +98,6 @@ function Article() {
           related.slice(0, 3)
         )
 
-          //set comments state with the fetched comments or an empty array if there are no comments
           setComments(
             response.data.comments || []
         )
@@ -114,20 +106,44 @@ function Article() {
             response.data
           )
 
-          await api.post(
-
-            `/articles/${response.data._id}/view`
-          )
+          // Track view - don't let failure block the page
+          try {
+            await api.post(
+              `/analytics/view/${response.data._id}`
+            )
+          } catch (viewErr) {
+            console.log('View tracking unavailable')
+          }
 
           setLoading(false)
 
         } catch (error) {
 
-          console.log(error)
+          console.log('API failed, trying fallback data:', error)
+
+          // Fallback to local data
+          const localArticle = fallbackArticles.find(
+            (a) => a.slug === slug
+          )
+
+          if (localArticle) {
+            setArticle(localArticle)
+            setComments([])
+
+            // Find related from fallback
+            const related = fallbackArticles.filter(
+              (item) =>
+                item._id !== localArticle._id &&
+                item.tags?.some(
+                  (tag) => localArticle.tags?.includes(tag)
+                )
+            )
+            setRelatedArticles(related.slice(0, 3))
+          } else {
+            setError('Failed to load article')
+          }
 
           setLoading(false)
-
-          setError('Failed to load article')
         }
       }
 
@@ -135,39 +151,59 @@ function Article() {
 
   }, [slug])
 
-  if (!article) {
+  // Show loading spinner FIRST
+  if (loading) {
+    return <LoadingSpinner />
+  }
 
+  // Then check for errors
+  if (error) {
     return (
-      <h1
-        style={{
-          padding: '40px'
-        }}
-      >
-        Loading...
-      </h1>
+      <div style={{
+        padding: '60px 20px',
+        textAlign: 'center',
+        maxWidth: '600px',
+        margin: '0 auto'
+      }}>
+        <h2 style={{
+          color: 'var(--color-text-primary)',
+          marginBottom: '12px'
+        }}>
+          {error}
+        </h2>
+        <p style={{ color: 'var(--color-text-secondary)', marginBottom: '24px' }}>
+          Make sure the backend server is running and the database is seeded.
+        </p>
+        <Link to="/" style={{
+          color: 'var(--color-primary)',
+          fontWeight: '600',
+          textDecoration: 'none'
+        }}>
+          ← Back to Home
+        </Link>
+      </div>
     )
   }
 
-  if (loading) {
+  // Then check if article exists
+  if (!article) {
+    return (
+      <div style={{
+        padding: '60px 20px',
+        textAlign: 'center'
+      }}>
+        <h2 style={{ color: 'var(--color-text-primary)' }}>Article not found</h2>
+        <Link to="/" style={{ color: 'var(--color-primary)', textDecoration: 'none' }}>
+          ← Back to Home
+        </Link>
+      </div>
+    )
+  }
 
-  return <LoadingSpinner />
-}
+  const readingTime = Math.ceil((article.body || '').split(' ').length / 200)
 
-if (error) {
-
- return (
-
-  <h2>
-
-   {error}
-
-  </h2>
- )
-}
-
-//this function will handle comment submission and post the comment to the server, then fetch the updated comments and update the comments state
-const handleCommentSubmit =
-  async (e) => {
+  const handleCommentSubmit =
+    async (e) => {
 
     e.preventDefault()
 
@@ -191,7 +227,7 @@ const handleCommentSubmit =
         )
 
       setComments(
-        updatedArticle.data.comments
+        updatedArticle.data.comments || []
       )
 
       setName('')
@@ -207,12 +243,11 @@ const handleCommentSubmit =
 
     <div
       style={{
-        padding: '40px',
+        padding: '40px 20px',
         maxWidth: '800px',
         margin: '0 auto'
       }}
     >
-
 
       <SEO
 
@@ -220,7 +255,7 @@ const handleCommentSubmit =
 
           description={
             article.excerpt ||
-            article.body.slice(0,120)
+            (article.body || '').slice(0,120)
           }
 
           image={
@@ -233,200 +268,257 @@ const handleCommentSubmit =
 
         />
 
-      <h1>
+      {/* Cover Image */}
+      {article.imageUrl && (
+        <div style={{
+          borderRadius: 'var(--radius-lg)',
+          overflow: 'hidden',
+          marginBottom: '32px',
+          boxShadow: 'var(--shadow-lg)'
+        }}>
+          <img
+            src={article.imageUrl}
+            alt={article.title}
+            style={{
+              width: '100%',
+              height: '400px',
+              objectFit: 'cover',
+              display: 'block'
+            }}
+            onError={(e) => {
+              e.target.style.display = 'none'
+            }}
+          />
+        </div>
+      )}
+
+      {/* Tags & Reading Time */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        marginBottom: '16px',
+        flexWrap: 'wrap'
+      }}>
+        {article.tags?.map((tag, index) => (
+          <span
+            key={index}
+            style={{
+              padding: '4px 14px',
+              background: 'var(--color-primary-light)',
+              color: 'var(--color-primary)',
+              borderRadius: 'var(--radius-full)',
+              fontSize: 'var(--text-sm)',
+              fontWeight: '600'
+            }}
+          >
+            {tag}
+          </span>
+        ))}
+        <span style={{
+          color: 'var(--color-text-muted)',
+          fontSize: 'var(--text-sm)'
+        }}>
+          ☕ {readingTime} min read
+        </span>
+      </div>
+
+      {/* Title */}
+      <h1 style={{
+        fontFamily: 'var(--font-heading)',
+        fontSize: 'var(--text-3xl)',
+        color: 'var(--color-text-primary)',
+        marginBottom: '32px',
+        lineHeight: '1.3'
+      }}>
         {article.title}
       </h1>
 
-      <p>
-        <strong>
-          Slug:
-        </strong>
-
-        {article.slug}
-      </p>
-
-    
-      <h2>
-          Comments
-      </h2>
-      {
-          comments.map(
-
-              (comment) => (
-
-          <div
-            key={comment._id}
-          >
-
-            <strong>
-              {comment.name}
-            </strong>
-
-            <p>
-              {comment.message}
-            </p>
-
-          </div>
-
-            )
-        )
-    }
-
-
-    <form
-  onSubmit={
-    handleCommentSubmit
-  }
->
-
-  <input
-
-    type="text"
-
-    placeholder="Your Name"
-
-    aria-label="Commenter Name"
-
-    value={name}
-
-    onChange={(e) =>
-      setName(
-        e.target.value
-      )
-    }
-
-  />
-
-  <br />
-
-  <textarea
-
-    placeholder="Comment"
-
-    aria-label="Comment Message"
-
-    value={message}
-
-    onChange={(e) =>
-      setMessage(
-        e.target.value
-      )
-    }
-
-  />
-
-  <br />
-
-  <button
-    type="submit"
-
-    aria-label="Submit Comment"
-  >
-
-    Add Comment
-
-  </button>
-
-</form>
-
+      {/* Article Content */}
       <div
+        className="markdown-content"
         style={{
-          marginTop: '30px'
+          color: 'var(--color-text-primary)',
+          lineHeight: '1.8',
+          fontSize: 'var(--text-md)'
         }}
       >
-
         <ReactMarkdown>
-
           {article.body}
-
         </ReactMarkdown>
-
       </div>
 
-      <div
-        style={{
-          marginTop: '30px'
-        }}
-      >
+      {/* Divider */}
+      <hr style={{
+        border: 'none',
+        borderTop: '1px solid var(--color-border)',
+        margin: '48px 0 32px'
+      }} />
 
-        <h3>
-          Tags
-        </h3>
-
-        {
-          article.tags?.map(
-
-            (tag, index) => (
-
-              <span
-
-                key={index}
-
-                style={{
-                  padding:
-                    '6px 12px',
-
-                  background:
-                    '#2563eb',
-
-                  color: 'white',
-
-                  marginRight: '10px',
-
-                  borderRadius: '5px'
-                }}
-              >
-
-                {tag}
-
-              </span>
-            )
-          )
-        }
-
-      </div>
-
-      <div
-          style={{
-          marginTop: '40px'
-          }}
-      >
-
-      <h2>
-          Related Articles
+      {/* Comments Section */}
+      <h2 style={{
+        fontFamily: 'var(--font-heading)',
+        color: 'var(--color-text-primary)',
+        marginBottom: '20px'
+      }}>
+        Comments ({comments.length})
       </h2>
 
-      {
-          relatedArticles.map(
+      {comments.length === 0 && (
+        <p style={{
+          color: 'var(--color-text-muted)',
+          marginBottom: '24px'
+        }}>
+          No comments yet. Be the first to share your thoughts!
+        </p>
+      )}
 
-            (item) => (
+      {comments.map((comment) => (
+        <div
+          key={comment._id}
+          style={{
+            background: 'var(--color-surface)',
+            border: '1px solid var(--color-border)',
+            borderRadius: 'var(--radius-md)',
+            padding: '16px 20px',
+            marginBottom: '12px'
+          }}
+        >
+          <strong style={{ color: 'var(--color-text-primary)' }}>
+            {comment.name}
+          </strong>
+          <p style={{
+            color: 'var(--color-text-secondary)',
+            marginTop: '6px',
+            lineHeight: '1.5'
+          }}>
+            {comment.message}
+          </p>
+        </div>
+      ))}
 
-            <div
+      {/* Comment Form */}
+      <form
+        onSubmit={handleCommentSubmit}
+        style={{
+          marginTop: '24px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px'
+        }}
+      >
+        <input
+          type="text"
+          placeholder="Your Name"
+          aria-label="Commenter Name"
+          value={name}
+          onChange={(e) =>
+            setName(e.target.value)
+          }
+          required
+          style={{
+            padding: '12px 16px',
+            border: '1px solid var(--color-border)',
+            borderRadius: 'var(--radius-md)',
+            background: 'var(--color-surface)',
+            color: 'var(--color-text-primary)',
+            fontSize: 'var(--text-md)'
+          }}
+        />
+
+        <textarea
+          placeholder="Write a comment..."
+          aria-label="Comment Message"
+          value={message}
+          onChange={(e) =>
+            setMessage(e.target.value)
+          }
+          required
+          rows={4}
+          style={{
+            padding: '12px 16px',
+            border: '1px solid var(--color-border)',
+            borderRadius: 'var(--radius-md)',
+            background: 'var(--color-surface)',
+            color: 'var(--color-text-primary)',
+            fontSize: 'var(--text-md)',
+            resize: 'vertical'
+          }}
+        />
+
+        <button
+          type="submit"
+          aria-label="Submit Comment"
+          style={{
+            padding: '12px 24px',
+            background: 'var(--color-primary)',
+            color: 'white',
+            border: 'none',
+            borderRadius: 'var(--radius-md)',
+            fontWeight: '600',
+            cursor: 'pointer',
+            fontSize: 'var(--text-md)',
+            alignSelf: 'flex-start',
+            transition: 'var(--transition-base)'
+          }}
+        >
+          Add Comment
+        </button>
+      </form>
+
+      {/* Related Articles */}
+      {relatedArticles.length > 0 && (
+        <div style={{ marginTop: '48px' }}>
+          <h2 style={{
+            fontFamily: 'var(--font-heading)',
+            color: 'var(--color-text-primary)',
+            marginBottom: '20px'
+          }}>
+            Related Articles
+          </h2>
+
+          <div style={{
+            display: 'grid',
+            gap: '16px'
+          }}>
+            {relatedArticles.map((item) => (
+              <Link
+                to={`/article/${item.slug}`}
                 key={item._id}
                 style={{
-                padding: '10px',
-                marginBottom: '10px',
-                border:
-                '1px solid #ddd',
-                borderRadius: '8px'
-              }}
-            >
-
-              <Link
-                  to={`/article/${item.slug}`}
-
-                  aria-label={`Read related article ${item.title}`}
+                  textDecoration: 'none',
+                  display: 'block',
+                  padding: '16px 20px',
+                  background: 'var(--color-surface)',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 'var(--radius-md)',
+                  transition: 'var(--transition-base)',
+                  color: 'var(--color-text-primary)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateX(4px)'
+                  e.currentTarget.style.borderColor = 'var(--color-primary)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateX(0)'
+                  e.currentTarget.style.borderColor = 'var(--color-border)'
+                }}
               >
-                  {item.title}
+                <strong>{item.title}</strong>
+                {item.excerpt && (
+                  <p style={{
+                    color: 'var(--color-text-secondary)',
+                    fontSize: 'var(--text-sm)',
+                    marginTop: '4px'
+                  }}>
+                    {item.excerpt}
+                  </p>
+                )}
               </Link>
-
-            </div>
-
-          )
-        )
-      }
-
-      </div>
+            ))}
+          </div>
+        </div>
+      )}
 
     </div>
   )

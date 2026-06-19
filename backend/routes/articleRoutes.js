@@ -1,65 +1,40 @@
 const express = require('express')
-
 const router = express.Router()
+const auth = require('../middleware/auth')
 
 const {
-
   getArticles,
-
   getArticleBySlug,
-
+  getArticleById,
   createArticle,
-
   updateArticle,
-
   deleteArticle,
+  createComment,
+  getCommentsByArticleId
+} = require('../controllers/articleController')
 
-  createComment
+/* GET all articles (public) */
+router.get('/', getArticles)
 
-} = require(
-  '../controllers/articleController'
-)
+/* GET article by MongoDB _id — used by admin editor (public) */
+router.get('/id/:id', getArticleById)
 
-/* GET ALL */
+/* GET article by URL slug (public) */
+router.get('/:slug', getArticleBySlug)
 
-router.get(
-  '/',
-  getArticles
-)
+/* GET comments for an article (public) */
+router.get('/:id/comments', getCommentsByArticleId)
 
-/* GET BY SLUG */
+/* CREATE article (protected) */
+router.post('/', auth, createArticle)
 
-router.get(
-  '/:slug',
-  getArticleBySlug
-)
+/* UPDATE article (protected) */
+router.put('/:id', auth, updateArticle)
 
-/* CREATE */
+/* DELETE article (protected) */
+router.delete('/:id', auth, deleteArticle)
 
-router.post(
-  '/',
-  createArticle
-)
-
-/* UPDATE */
-
-router.put(
-  '/:id',
-  updateArticle
-)
-
-/* DELETE */
-
-router.delete(
-  '/:id',
-  deleteArticle
-)
-
-/* COMMENTS */
-
-router.post(
-  '/:id/comments',
-  createComment
-)
+/* CREATE comment on an article (public) */
+router.post('/:id/comments', createComment)
 
 module.exports = router

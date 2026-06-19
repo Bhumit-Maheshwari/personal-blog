@@ -1,22 +1,14 @@
+import './LoadingSpinner.css'
+
 function LoadingSpinner() {
-
   return (
-
-    <div
-      style={{
-        textAlign: 'center',
-        padding: '60px'
-      }}
-    >
-
-      <h2>
-        Loading Articles...
-      </h2>
-
-      <p>
-        Please wait.
-      </p>
-
+    <div className="loading-spinner-container" role="status" aria-label="Loading">
+      <div className="loading-spinner">
+        <div className="spinner-ring"></div>
+        <div className="spinner-ring"></div>
+        <div className="spinner-ring"></div>
+      </div>
+      <p className="loading-text">Loading...</p>
     </div>
   )
 }

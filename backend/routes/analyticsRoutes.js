@@ -1,30 +1,19 @@
-const express =
-require('express')
-
-const router =
-express.Router()
+const express = require('express')
+const router = express.Router()
 
 const {
-
   logView,
-
   getAnalytics
+} = require('../controllers/analyticsController')
 
-} = require(
+/**
+ * Analytics routes — mounted at /api/analytics in server.js
+ *
+ * POST /api/analytics/view/:id  — log a page view for an article
+ * GET  /api/analytics/articles  — get aggregated view analytics
+ */
 
-'../controllers/analyticsController'
+router.post('/view/:id', logView)
+router.get('/articles', getAnalytics)
 
-)
-
-router.post(
-  '/articles/:id/view',
-  logView
-)
-
-router.get(
-  '/analytics/articles',
-  getAnalytics
-)
-
-module.exports =
-router
+module.exports = router
